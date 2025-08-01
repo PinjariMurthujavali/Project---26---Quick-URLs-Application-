@@ -1,5 +1,6 @@
-// Load URLs from LocalStorage (or set example links if empty)
+// ✅ Load URLs when the page starts
 document.addEventListener("DOMContentLoaded", function () {
+  // If there are no URLs saved, load example links
   if (!localStorage.getItem("quickURLs")) {
     let sampleLinks = [
       "https://www.google.com",
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadURLs();
 });
 
+// ✅ Add a new URL
 function addURL() {
   let urlInput = document.getElementById("urlInput");
   let url = urlInput.value.trim();
@@ -22,7 +24,7 @@ function addURL() {
     return;
   }
 
-  // Add 'https://' if missing
+  // Auto-add https:// if missing
   if (!url.startsWith("http://") && !url.startsWith("https://")) {
     url = "https://" + url;
   }
@@ -36,6 +38,7 @@ function addURL() {
   loadURLs();
 }
 
+// ✅ Load and show all URLs
 function loadURLs() {
   let urlList = document.getElementById("urlList");
   urlList.innerHTML = "";
@@ -55,6 +58,7 @@ function loadURLs() {
   });
 }
 
+// ✅ Delete a URL
 function deleteURL(index) {
   let urls = JSON.parse(localStorage.getItem("quickURLs")) || [];
   urls.splice(index, 1);
