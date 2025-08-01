@@ -1,6 +1,5 @@
-// ✅ Load URLs when the page starts
+// ✅ Load URLs on page start
 document.addEventListener("DOMContentLoaded", function () {
-  // If there are no URLs saved, load example links
   if (!localStorage.getItem("quickURLs")) {
     let sampleLinks = [
       "https://www.google.com",
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadURLs();
 });
 
-// ✅ Add a new URL
+// ✅ Add new URL
 function addURL() {
   let urlInput = document.getElementById("urlInput");
   let url = urlInput.value.trim();
@@ -24,12 +23,11 @@ function addURL() {
     return;
   }
 
-  // Auto-add https:// if missing
+  // Add https:// if missing
   if (!url.startsWith("http://") && !url.startsWith("https://")) {
     url = "https://" + url;
   }
 
-  // Save URL to localStorage
   let urls = JSON.parse(localStorage.getItem("quickURLs")) || [];
   urls.push(url);
   localStorage.setItem("quickURLs", JSON.stringify(urls));
@@ -38,7 +36,7 @@ function addURL() {
   loadURLs();
 }
 
-// ✅ Load and show all URLs
+// ✅ Load and display URLs
 function loadURLs() {
   let urlList = document.getElementById("urlList");
   urlList.innerHTML = "";
@@ -49,8 +47,13 @@ function loadURLs() {
     let card = document.createElement("div");
     card.className = "url-card";
 
+    let favicon = `https://www.google.com/s2/favicons?domain=${url}`;
+
     card.innerHTML = `
-      <a href="${url}" target="_blank">${url}</a>
+      <div class="url-info">
+        <img src="${favicon}" alt="favicon">
+        <a href="${url}" target="_blank">${url}</a>
+      </div>
       <button class="delete-btn" onclick="deleteURL(${index})">X</button>
     `;
 
@@ -58,7 +61,7 @@ function loadURLs() {
   });
 }
 
-// ✅ Delete a URL
+// ✅ Delete URL
 function deleteURL(index) {
   let urls = JSON.parse(localStorage.getItem("quickURLs")) || [];
   urls.splice(index, 1);
